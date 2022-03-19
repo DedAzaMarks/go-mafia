@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+option go_package = "github.com/DedAzaMarks/go-mafia/pkg/proto/service";
+
+package mafia;
+
+// The greeting service definition.
+service Mafia {
+  // Sends a greeting
+  rpc add_user (AddUserRequest) returns (Response) {}
+  rpc delete_user (BaseUserRequest) returns (Response) {}
+  rpc get_users (Empty) returns (GetUsersResponse) {}
+  rpc accuse_user (AccuseUserRequest) returns (Response) {}
+  rpc vote_finish_day (BaseUserRequest) returns (Response) {}
+  rpc init_communication_channel (stream CommunicationRequest) returns (stream CommunicationResponse) {}
+}
+
+message User {
+  int32 user_id = 1;
+  string name = 2;
+}
+
+message Response {
+  StatusCode status = 1;
+  string message = 2;
+  map<string, string> data = 3;
+}
+
+message BaseUserRequest {
+  int32 user_id = 1;
+}
+
+message CommunicationRequest {
+  int32 user_id = 1;
+  string message = 2;
+  CommunicationDataType data_type = 3;
+}
+
+message CommunicationResponse {
+  string message =  1;
+  string author = 2;
+}
+
+enum CommunicationDataType {
+  EMPTY_MESSAGE = 0;
+  BROADCAST_MESSAGE = 1;
+  DECISION_MESSAGE = 2;
+  HANDSHAKE_MESSAGE = 3;
+}
+
+// The request message containing the user's name.
+message AddUserRequest {
+  string name = 1;
+}
+
+message Empty {}
+
+message GetUsersResponse {
+  StatusCode status = 1;
+  map<int32, User> users = 2;
+}
+
+message AccuseUserRequest {
+  int32 accusing_user_id = 1;
+  int32 accused_user_id = 2;
+}
+
+enum StatusCode {
+  UNSPECIFIED = 0;
+
+  // 2** Success
+  OK = 200;
+  CREATED = 201;
+
+  // 4** Client Error
+  BAD_REQUEST = 400;
+  FORBIDDEN = 403;
+  NOT_FOUND = 404;
+
+  // 5** Server Error
+  INTERNAL_SERVER_ERROR = 500;
+  NOT_IMPLEMENTED = 503;
+}
