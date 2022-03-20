@@ -16,3 +16,11 @@ const (
 const MinUsersNum = 4
 
 const MafiaNum = 1
+
+const (
+	GetUsers      = "users"
+	Broadcast     = "broadcast"
+	VoteFinishDay = "nigh"
+	Decision      = "decide"
+	Accuse        = "accuse"
+)

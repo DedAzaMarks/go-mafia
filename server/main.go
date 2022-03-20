@@ -71,8 +71,9 @@ func (s *server) AddUser(_ context.Context, req *service.AddUserRequest) (*servi
 	s.userMessages[userID] = make([]service.Response, 0)
 
 	return &service.Response{
-		Status: service.StatusCode_CREATED,
-		Author: "Server",
+		Status:  service.StatusCode_CREATED,
+		Message: strconv.Itoa(int(userID)),
+		Author:  "Server",
 	}, nil
 }
 
@@ -588,7 +589,7 @@ func main() {
 		mu:             sync.RWMutex{},
 	}
 	service.RegisterMafiaServer(s, &server)
-	listener, err := net.Listen("tcp", "0.0.0.0::42069")
+	listener, err := net.Listen("tcp", "0.0.0.0:42069")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
