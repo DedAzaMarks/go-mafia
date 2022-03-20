@@ -13,6 +13,6 @@ const (
 	DayTimeNight
 )
 
-const MinUsersNum = 3
+const MinUsersNum = 4
 
 const MafiaNum = 1

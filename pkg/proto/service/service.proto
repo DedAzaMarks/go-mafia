@@ -12,7 +12,7 @@ service Mafia {
   rpc get_users (Empty) returns (GetUsersResponse) {}
   rpc accuse_user (AccuseUserRequest) returns (Response) {}
   rpc vote_finish_day (BaseUserRequest) returns (Response) {}
-  rpc init_communication_channel (stream CommunicationRequest) returns (stream CommunicationResponse) {}
+  rpc init_communication_channel (stream CommunicationRequest) returns (stream Response) {}
 }
 
 message User {
@@ -23,7 +23,7 @@ message User {
 message Response {
   StatusCode status = 1;
   string message = 2;
-  map<string, string> data = 3;
+  string author = 3;
 }
 
 message BaseUserRequest {
@@ -34,11 +34,6 @@ message CommunicationRequest {
   int32 user_id = 1;
   string message = 2;
   CommunicationDataType data_type = 3;
-}
-
-message CommunicationResponse {
-  string message =  1;
-  string author = 2;
 }
 
 enum CommunicationDataType {

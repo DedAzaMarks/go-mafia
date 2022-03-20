@@ -91,7 +91,7 @@ func (c *mafiaClient) InitCommunicationChannel(ctx context.Context, opts ...grpc
 
 type Mafia_InitCommunicationChannelClient interface {
 	Send(*CommunicationRequest) error
-	Recv() (*CommunicationResponse, error)
+	Recv() (*Response, error)
 	grpc.ClientStream
 }
 
@@ -103,8 +103,8 @@ func (x *mafiaInitCommunicationChannelClient) Send(m *CommunicationRequest) erro
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *mafiaInitCommunicationChannelClient) Recv() (*CommunicationResponse, error) {
-	m := new(CommunicationResponse)
+func (x *mafiaInitCommunicationChannelClient) Recv() (*Response, error) {
+	m := new(Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -255,7 +255,7 @@ func _Mafia_InitCommunicationChannel_Handler(srv interface{}, stream grpc.Server
 }
 
 type Mafia_InitCommunicationChannelServer interface {
-	Send(*CommunicationResponse) error
+	Send(*Response) error
 	Recv() (*CommunicationRequest, error)
 	grpc.ServerStream
 }
@@ -264,7 +264,7 @@ type mafiaInitCommunicationChannelServer struct {
 	grpc.ServerStream
 }
 
-func (x *mafiaInitCommunicationChannelServer) Send(m *CommunicationResponse) error {
+func (x *mafiaInitCommunicationChannelServer) Send(m *Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
